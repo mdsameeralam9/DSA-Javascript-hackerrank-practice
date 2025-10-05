@@ -54,8 +54,14 @@ class MinStackSimplestApproach {
     return this.s[this.s.length - 1][1];
   }
 }
-
-
+const minStack1 = new MinStackSimplestApproach();
+minStack1.push(-2);
+minStack1.push(0);
+minStack1.push(-3);
+console.log(minStack1.getMin()); // Expected: -3 [15]
+minStack1.pop();
+console.log(minStack1.top());    // Expected: 0 [15]
+console.log(minStack1.getMin()); // Expected: -2 [15]
 
 
 /**
@@ -244,3 +250,5 @@ class MinStack3 {
     };
   }
 }
+
+
