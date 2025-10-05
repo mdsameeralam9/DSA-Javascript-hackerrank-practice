@@ -1,4 +1,5 @@
 //1. Leetcode - Min Stack
+// Source - https://www.youtube.com/watch?v=wHDm-N2m2XY
 // Min Stack using single stack of pairs: [value, minSoFar]
 // simplest approach but the problem is space complexity is O(2*n) - because we store [val, val]
 
