@@ -317,3 +317,5 @@ function solve(operations) {
 // Sample Input 0
 // const operations0 = ['push 5', 'getMin'];
 // console.log(solve(operations0)); // [5]
+
+//-------------------------------------Day 7 End---------------------------------------
