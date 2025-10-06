@@ -17,18 +17,19 @@ function countAffordablePairs(prices, budget) {
 }
 
 console.log(countAffordablePairs([1, 2, 3, 4, 5], 7)); // 8
-//Time complexity: O(n2) 
+//Time complexity: O(n2)
 // Space complexity: O(1)
-
 
 // O(m log m) time, O(1) extra space (in-place sort)
 function countAffordablePairsOptimised(prices, budget) {
   prices.sort((a, b) => a - b);
-  let i = 0, r = prices.length - 1, count = 0;
+  let i = 0,
+    r = prices.length - 1,
+    count = 0;
   while (i < r) {
     const sum = prices[i] + prices[r];
     if (sum <= budget) {
-      count += (r - i);
+      count += r - i;
       i += 1; // move left up to count new base pairs
     } else {
       r -= 1; // need a smaller right to reduce sum
@@ -63,3 +64,31 @@ console.log(generateAngleBrackets(1)); // ["<>"]
 console.log(generateAngleBrackets(2)); // ["<><>", "<<>>"]
 console.log(generateAngleBrackets(3)); // ["<<<>>>","<<><>>","<<>><>","<><<>>","<><><>"]
 
+function generateValidBrackets(n) {
+  const result = [];
+
+  function backtrack(current, open, close) {
+    if (current.length === 2 * n) {
+      result.push(current);
+      return;
+    }
+
+    if (open < n) {
+      backtrack(current + "<", open + 1, close);
+    }
+
+    if (close < open) {
+      backtrack(current + ">", open, close + 1);
+    }
+  }
+
+  backtrack("", 0, 0);
+  return result;
+}
+
+// Test
+console.log(generateValidBrackets(2));
+// Output: ['<><>', '<<>>']
+
+console.log(generateValidBrackets(3));
+// Output: ['<><><>', '<><>>', '<<><>>', '<<>><>', '<<<>>>']
