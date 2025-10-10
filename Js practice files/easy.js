@@ -18,20 +18,7 @@ console.log(countResponseTimeRegressions([100, 200, 150, 300]));
 
 //-------------------------------------Day 1 End---------------------------------------
 
-// 2. isAlphabeticPalindrome
-function isAlphabeticPalindrome(code) {
-  // Write your code here
-  code = code.toLowerCase();
-  let filterStr = "";
-  for (const char of code) {
-    if (char >= "a" && char <= "z") {
-      filterStr += char;
-    }
-  }
 
-  return filterStr === filterStr.split("").reverse().join("");
-}
-console.log(isAlphabeticPalindrome("A1b2B!a"));
 
 //-------------------------------------Day 2 End---------------------------------------
 // 3. firstMissingPositive_sort

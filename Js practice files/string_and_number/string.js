@@ -91,3 +91,19 @@ console.log(areBracketsProperlyMatched("([)]"));                                
 console.log(areBracketsProperlyMatched("(]"));                                   // 0
 // Time complexity: O(n) and Space complexity: O(n)
 //-------------------------------------Day 6 End---------------------------------------
+
+
+// 2. isAlphabeticPalindrome
+function isAlphabeticPalindrome(code) {
+  // Write your code here
+  code = code.toLowerCase();
+  let filterStr = "";
+  for (const char of code) {
+    if (char >= "a" && char <= "z") {
+      filterStr += char;
+    }
+  }
+
+  return filterStr === filterStr.split("").reverse().join("");
+}
+console.log(isAlphabeticPalindrome("A1b2B!a"));
