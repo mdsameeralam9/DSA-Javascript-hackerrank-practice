@@ -60,6 +60,58 @@ console.log(bob.name);   // "Bob"
 // NOTE: this === alice/bob inside Person constructor 
 
 
+`
+Class methods:
+Inside class instance methods, this refers to the instance; 
+in static methods, this refers to the class constructor function itself.
+`
+class Car {
+  constructor(make, model) {
+    // `this` refers to the new object being created
+    this.make = make;
+    this.model = model;
+  }
+
+  // An instance method to display the car's details
+  displayDetails() {
+    // Inside here, `this` refers to the specific instance (`myCar` or `anotherCar`)
+    console.log(`This car is a ${this.make} ${this.model}.`);
+  }
+}
+
+// Create two separate instances
+const myCar = new Car('Honda', 'Civic');
+const anotherCar = new Car('Toyota', 'Camry');
+
+myCar.displayDetails(); // "This car is a Honda Civic." (this === myCar)
+anotherCar.displayDetails(); // "This car is a Toyota Camry." (this === anotherCar)
+
+// static class method - MathOperations
+class MathOperations {
+  // A static method to add two numbers
+  static add(a, b) {
+    // `this` refers to the class (`MathOperations`)
+    console.log(this === MathOperations); // true
+    return a + b;
+  }
+
+  // An instance method to multiply with a stored value
+  multiply(value) {
+    // `this` refers to the instance
+    return this.storedValue * value;
+  }
+}
+
+// Access the static method directly on the class
+console.log(MathOperations.add(5, 3)); // 8
+
+// Trying to call a static method on an instance will fail
+const myOps = new MathOperations();
+// myOps.add(5, 3); // TypeError: myOps.add is not a function
+
+// Static methods are commonly used for utility functions that don't need access to instance data,
+// like the built-in `Math` object methods (`Math.random()`, `Math.max()`, etc.).
+
 
 `NOTE: The reason for the difference-
 1. Classic Script (<script>): In a classic, non-module script, a top-level function call like sloppyFunc() 
