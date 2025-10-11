@@ -111,7 +111,149 @@ const myOps = new MathOperations();
 
 // Static methods are commonly used for utility functions that don't need access to instance data,
 // like the built-in `Math` object methods (`Math.random()`, `Math.max()`, etc.).
+`
+Event listeners:
+In DOM event handlers set via element.addEventListener, inside a non-arrow handler 
+this is the element receiving the event; arrow handlers use lexical this and 
+usually are undefined in modules.
 
+<button class="action-button">Click Me</button>
+<button class="action-button">Click Me</button>
+<button class="action-button">Click Me</button>
+
+<script>
+  const buttons = document.querySelectorAll('.action-button');
+
+  // Use a regular function for the handler
+  buttons.forEach(button => {
+    button.addEventListener('click', function() {
+      // Inside here, 'this' is the specific button that was clicked
+      this.textContent = 'Clicked!';
+      this.disabled = true;
+      console.log(this); // Logs the button element
+    });
+  });
+</script>
+`
+
+`
+call/apply/bind:
+0. call(), apply(), and bind() are methods in JavaScript that are used to explicitly 
+set the this value inside a function. This gives you control over the function's execution context, 
+which is especially useful when the default this binding is not what you need. 
+
+1. call/apply invoke a function with an explicit this; 
+2. bind returns a new function permanently bound to the provided this.
+
+`
+const userX = {
+    name: 'Sam',
+    email: 'sam@gmail.com',
+    getUserInfo() {
+      return `${this.name} ${this.email}`;
+    },
+};
+
+const user2 = {
+    name: 'John',
+    email: 'John@gmail.com',
+};
+
+
+console.log(userX.getUserInfo()) 
+// call
+console.log(userX.getUserInfo.call(user2))
+
+// apply
+const user3 = {
+    name: 'Hero',
+    email: 'Hero@gmail.com',
+};
+console.log(userX.getUserInfo.apply(user3))
+
+// bind
+const user4 = {
+    name: 'Raj',
+    email: 'Raj@gmail.com',
+};
+const newInfoFun = userX.getUserInfo.bind(user4);
+console.log(user4)
+console.log(newInfoFun())
+
+//  ----------------------- example 2 ------------------------
+const person = {
+  fullName: function(city, country) {
+    return this.firstName + ' ' + this.lastName + ' from ' + city + ', ' + country;
+  }
+};
+
+const person1 = {
+  firstName: 'John',
+  lastName: 'Doe'
+};
+
+// Use call() to "borrow" the fullName method and use it for person1
+const result = person.fullName.call(person1, 'Oslo', 'Norway');
+console.log(result); // "John Doe from Oslo, Norway"
+
+// Use apply() to "borrow" the fullName method and use it for person1
+const resultApply = person.fullName.apply(person1, ['Oslo', 'Norway']);
+console.log(resultApply); // "John Doe from Oslo, Norway"
+
+// Use bind() to "borrow" the fullName method and use it for person1
+const resultBindFn = person.fullName.bind(person1, 'Oslo', 'Norway');
+console.log(resultBindFn()); // "John Doe from Oslo, Norway"
+
+
+`
+Arrow functions:
+Arrow functions capture this lexically from the surrounding scope at creation time 
+and cannot be rebound by call/apply/bind.
+
+1. Do not have their own this binding.
+2. They inherit the this value from their lexical scope—the parent scope where they were defined.
+3. Once an arrow function is defined, its this is permanently set and cannot be overridden
+
+`
+const personX = {
+  name: 'John',
+  // Regular method: `this` is the object itself (person)
+  greetRegular: function() {
+    console.log(`Hello, my name is ${this.name}.`);
+  },
+  // Arrow method: `this` is inherited from the global scope (or undefined in a module)
+  greetArrow: () => {
+    console.log(`Hello, my name is ${this.name}.`);
+  },
+};
+
+const anotherPerson = {
+  name: 'Jane',
+};
+
+// --- Part 1: Default behavior ---
+
+console.log("--- Default Behavior ---");
+personX.greetRegular(); // Output: "Hello, my name is John." (Correct)
+personX.greetArrow();   // Output: "Hello, my name is undefined." (Incorrect, `this` is window or undefined)
+
+// --- Part 2: Attempting to rebind `this` with .call() ---
+
+console.log("\n--- Rebinding with .call() ---");
+
+// This works for the regular function
+personX.greetRegular.call(anotherPerson); // Output: "Hello, my name is Jane." (Success)
+
+// This does NOT work for the arrow function
+personX.greetArrow.call(anotherPerson);   // Output: "Hello, my name is undefined." (Failure)
+
+
+`
+React components:
+In React class components, this refers to the component instance; methods often need binding or 
+class fields to preserve this; in function components/hooks, there is no this for component 
+state/props; closures replace this usage.
+`
 
 `NOTE: The reason for the difference-
 1. Classic Script (<script>): In a classic, non-module script, a top-level function call like sloppyFunc() 

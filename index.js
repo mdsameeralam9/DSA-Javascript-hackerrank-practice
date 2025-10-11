@@ -1,9 +1,17 @@
-function Person(name) {
-  this.name = name;
-}
+const person = {
+  fullName: function(...city) {
+    console.log(...city)
+    console.log(city)
+  }
+};
 
-const alice = new Person('Alice');
-const bob = new Person('Bob');
+const person1 = {
+  firstName: 'John',
+  lastName: 'Doe'
+};
 
-console.log(alice.name); // "Alice"
-console.log(bob.name);   // "Bob"
+
+
+// Use apply() to "borrow" the fullName method and use it for person1
+const resultApply = person.fullName.apply(person1, ['Oslo', 'Norway']);
+console.log(resultApply); // "John Doe from Oslo, Norway"
